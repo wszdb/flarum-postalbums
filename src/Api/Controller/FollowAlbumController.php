@@ -10,6 +10,7 @@ use Tobscure\JsonApi\Document;
 use Wszdb\PostAlbums\Api\Serializer\AlbumSerializer;
 use Wszdb\PostAlbums\Model\Album;
 use Wszdb\PostAlbums\Model\AlbumFollow;
+use Carbon\Carbon;
 
 class FollowAlbumController extends AbstractShowController
 {
@@ -45,7 +46,7 @@ class FollowAlbumController extends AbstractShowController
         $follow = new AlbumFollow();
         $follow->album_id = $album->id;
         $follow->user_id = $actor->id;
-        $follow->created_at = now();
+        $follow->created_at = Carbon::now();
         $follow->save();
 
         // 增加专辑关注数

@@ -6,6 +6,7 @@ use Flarum\Database\AbstractModel;
 use Flarum\User\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Carbon\Carbon;
 
 class Album extends AbstractModel
 {
@@ -17,8 +18,6 @@ class Album extends AbstractModel
         'followers_count' => 'integer',
         'items_count' => 'integer',
     ];
-
-    protected $dates = ['created_at', 'updated_at', 'last_item_at'];
 
     /**
      * 专辑创建者
@@ -74,6 +73,8 @@ class Album extends AbstractModel
     public function incrementItemsCount(): void
     {
         $this->increment('items_count');
+        $this->last_item_at = Carbon::now();
+        $this->save();
     }
 
     /**
@@ -82,14 +83,5 @@ class Album extends AbstractModel
     public function decrementItemsCount(): void
     {
         $this->decrement('items_count');
-    }
-
-    /**
-     * 更新最后收藏时间
-     */
-    public function updateLastItemAt(): void
-    {
-        $this->last_item_at = now();
-        $this->save();
     }
 }

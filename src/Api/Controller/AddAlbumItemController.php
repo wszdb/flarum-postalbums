@@ -16,8 +16,6 @@ class AddAlbumItemController extends AbstractCreateController
 {
     public $serializer = AlbumItemSerializer::class;
 
-    public $include = ['post', 'post.discussion'];
-
     protected $validator;
 
     public function __construct(AlbumItemValidator $validator)
@@ -33,42 +31,42 @@ class AddAlbumItemController extends AbstractCreateController
         $albumId = Arr::get($request->getQueryParams(), 'id');
         $album = Album::findOrFail($albumId);
 
-        // 检查权限
+        // 检查权限：只有专辑所有者或管理员可以添加
         if ($album->user_id !== $actor->id && !$actor->isAdmin()) {
             throw new \Flarum\Foundation\ValidationException([
-                'message' => '无权向此专辑添加收藏项'
+                'message' => '您没有权限向此专辑添加内容'
             ]);
         }
 
         $data = Arr::get($request->getParsedBody(), 'data.attributes', []);
+        
+        // 验证数据
         $this->validator->assertValid($data);
 
         $postId = Arr::get($data, 'post_id');
-        $postType = Arr::get($data, 'post_type', 'post');
         $customTitle = Arr::get($data, 'custom_title');
 
-        // 检查是否已存在
-        $exists = AlbumItem::where('album_id', $albumId)
+        // 检查是否已经存在
+        $existing = AlbumItem::where('album_id', $album->id)
             ->where('post_id', $postId)
-            ->exists();
+            ->first();
 
-        if ($exists) {
+        if ($existing) {
             throw new \Flarum\Foundation\ValidationException([
-                'message' => '此帖子已在专辑中'
+                'message' => '该帖子已经在此专辑中'
             ]);
         }
 
+        // 创建收藏项
         $item = AlbumItem::create([
-            'album_id' => $albumId,
+            'album_id' => $album->id,
             'post_id' => $postId,
-            'post_type' => $postType,
             'custom_title' => $customTitle,
             'user_id' => $actor->id,
         ]);
 
-        // 更新专辑统计和最后收藏时间
+        // 更新专辑统计（incrementItemsCount 方法内部已经更新了 last_item_at）
         $album->incrementItemsCount();
-        $album->updateLastItemAt();
 
         return $item;
     }
