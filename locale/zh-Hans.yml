@@ -1,0 +1,95 @@
+wszdb-flarum-postalbums:
+  admin:
+    settings:
+      title: 帖子专辑设置
+      display_name_label: 功能显示名称
+      display_name_help: 在论坛前台显示的功能名称
+      guest_access_label: 允许游客访问
+      guest_access_help: 开启后，未登录用户可以浏览专辑
+      
+      album_title_length_label: 专辑标题最大长度
+      album_title_length_help: 专辑标题允许的最大字符数
+      album_description_length_label: 专辑简介最大长度
+      album_description_length_help: 专辑简介允许的最大字符数
+      item_title_length_label: 收藏项标题最大长度
+      item_title_length_help: 收藏项自定义标题的最大字符数
+      
+      max_albums_per_user_label: 每个用户最多创建专辑数
+      max_albums_per_user_help: 限制单个用户可创建的专辑数量
+      max_items_per_album_label: 每个专辑最多收藏项数
+      max_items_per_album_help: 限制单个专辑可包含的收藏项数量
+      
+      albums_per_page_label: 每页显示专辑数
+      albums_per_page_help: 专辑列表每页显示的数量
+      items_per_page_label: 每页显示收藏项数
+      items_per_page_help: 专辑详情页收藏项列表每页显示的数量
+      
+      default_sort_label: 默认排序方式
+      default_sort_help: 用户首次访问专辑广场时的默认排序方式
+
+  forum:
+    albums:
+      title: 帖子专辑
+      create: 创建专辑
+      edit: 编辑专辑
+      delete: 删除专辑
+      
+      square: 专辑广场
+      my_albums: 我的专辑
+      my_following: 我的关注
+      
+      search_placeholder: 搜索专辑...
+      sort_latest: 最新创建
+      sort_popular: 关注最多
+      
+      no_albums: 暂无专辑
+      load_more: 加载更多
+      
+      title_label: 专辑标题
+      title_placeholder: 输入专辑标题
+      description_label: 专辑简介
+      description_placeholder: 输入专辑简介（可选）
+      
+      items_count: "{count} 个收藏"
+      followers_count: "{count} 人关注"
+      
+      add_to_album: 加入专辑
+      select_album: 选择专辑
+      no_albums_prompt: 您还没有创建专辑，是否现在创建？
+      
+      follow: 关注
+      followed: 已关注
+      unfollow: 取消关注
+      
+      edit_item_title: 编辑收藏项标题
+      custom_title_label: 自定义标题
+      custom_title_placeholder: 留空则使用默认标题
+      
+      remove_item: 移除
+      confirm_delete_album: 确定要删除此专辑吗？删除后无法恢复。
+      confirm_remove_item: 确定要移除此收藏项吗？
+      
+      created_by: 创建者
+      created_at: 创建时间
+      from_discussion: 来自
+      
+      success:
+        created: 专辑创建成功
+        updated: 专辑更新成功
+        deleted: 专辑已删除
+        item_added: 已添加到专辑
+        item_removed: 已从专辑移除
+        item_updated: 收藏项更新成功
+        album_followed: 已关注专辑
+        album_unfollowed: 已取消关注
+        
+      error:
+        title_required: 请输入专辑标题
+        title_too_long: 专辑标题长度超出限制
+        description_too_long: 专辑简介长度超出限制
+        max_albums_reached: 您已达到专辑数量上限
+        max_items_reached: 专辑已达到收藏项数量上限
+        item_exists: 该帖子已在专辑中
+        not_found: 专辑不存在
+        no_permission: 您没有权限执行此操作
+        guest_access_denied: 需要登录才能访问专辑

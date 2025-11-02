@@ -1,0 +1,589 @@
+.AlbumsPage {
+  padding-top: 30px;
+
+  .AlbumsPage-header {
+    margin-bottom: 30px;
+    background: var(--body-bg);
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .AlbumsPage-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 {
+      margin: 0;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--heading-color);
+      
+      .AlbumsPage-count {
+        font-size: 14px;
+        font-weight: normal;
+        color: var(--muted-color);
+        margin-left: 8px;
+      }
+    }
+  }
+
+  // 一行布局：标签 + 搜索框
+  .AlbumsPage-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .AlbumsPage-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 10px;
+    flex: 0 0 auto;
+
+    li {
+      margin: 0;
+      padding: 0;
+    }
+
+    .Button {
+      border: 1px solid var(--control-bg);
+      background: var(--body-bg);
+      padding: 10px 20px;
+      border-radius: 6px;
+      color: var(--body-color);
+      transition: all 0.2s ease;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      white-space: nowrap;
+
+      &:hover {
+        background: var(--control-bg);
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transform: translateY(-1px);
+      }
+
+      &.active {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+        color: #fff;
+        font-weight: 600;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        
+        &:hover {
+          background: var(--primary-color);
+          color: #fff;
+          transform: none;
+        }
+
+        &::before {
+          content: '';
+          display: inline-block;
+          width: 6px;
+          height: 6px;
+          background: #fff;
+          border-radius: 50%;
+          margin-right: 8px;
+          vertical-align: middle;
+        }
+      }
+
+      .icon {
+        margin-right: 6px;
+        font-size: 13px;
+      }
+    }
+  }
+
+  .AlbumsPage-search {
+    display: flex;
+    gap: 10px;
+    flex: 1 1 auto;
+    max-width: 400px;
+    min-width: 250px;
+
+    .FormControl {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid var(--control-bg);
+      border-radius: 6px;
+      font-size: 14px;
+      transition: all 0.2s;
+
+      &:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+      }
+    }
+
+    .Button {
+      flex-shrink: 0;
+      padding: 10px 20px;
+      white-space: nowrap;
+    }
+  }
+
+  .AlbumsPage-content {
+    margin-top: 30px;
+  }
+
+  .AlbumsList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 30px;
+  }
+
+  .AlbumCard {
+    background: var(--body-bg);
+    border: 1px solid var(--control-bg);
+    border-radius: 10px;
+    padding: 24px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary-color);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      transform: translateY(-4px);
+      border-color: var(--primary-color);
+
+      &::before {
+        transform: scaleY(1);
+      }
+    }
+
+    .AlbumCard-content {
+      color: var(--body-color);
+      text-decoration: none;
+      display: block;
+    }
+
+    .AlbumCard-title {
+      font-size: 19px;
+      font-weight: 600;
+      margin: 0 0 12px 0;
+      color: var(--heading-color);
+      line-height: 1.4;
+      
+      &:hover {
+        color: var(--primary-color);
+      }
+    }
+
+    .AlbumCard-description {
+      color: var(--muted-color);
+      font-size: 14px;
+      margin: 0 0 16px 0;
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 44px;
+    }
+
+    .AlbumCard-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--muted-color);
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--control-bg);
+
+      .AlbumCard-author {
+        display: flex;
+        align-items: center;
+        
+        i {
+          margin-right: 6px;
+          color: var(--primary-color);
+        }
+      }
+
+      .AlbumCard-time {
+        font-size: 12px;
+      }
+    }
+
+    .AlbumCard-stats {
+      display: flex;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--muted-color);
+
+      span {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        i {
+          color: var(--primary-color);
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .AlbumsPage-pagination {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px solid var(--control-bg);
+
+    .Pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+
+      .Button {
+        min-width: 40px;
+        padding: 8px 16px;
+        border: 1px solid var(--control-bg);
+        border-radius: 6px;
+        background: var(--body-bg);
+        color: var(--body-color);
+        transition: all 0.2s;
+
+        &:hover {
+          background: var(--control-bg);
+          border-color: var(--primary-color);
+          color: var(--primary-color);
+        }
+
+        &.active {
+          background: var(--primary-color);
+          border-color: var(--primary-color);
+          color: #fff;
+          font-weight: 600;
+          pointer-events: none;
+        }
+      }
+
+      .Pagination-ellipsis {
+        padding: 8px 12px;
+        color: var(--muted-color);
+      }
+    }
+  }
+}
+
+.AlbumDetailPage {
+  .AlbumDetailPage-header {
+    background: var(--control-bg);
+    padding: 40px 0;
+    margin-bottom: 30px;
+    border-radius: 0 0 16px 16px;
+
+    .AlbumDetailPage-info {
+      h1 {
+        font-size: 32px;
+        font-weight: 700;
+        margin: 15px 0 12px 0;
+        color: var(--heading-color);
+      }
+
+      .AlbumDetailPage-description {
+        color: var(--muted-color);
+        font-size: 16px;
+        margin: 12px 0;
+        line-height: 1.6;
+      }
+
+      .AlbumDetailPage-meta {
+        margin: 20px 0;
+
+        .AlbumDetailPage-author {
+          margin-bottom: 12px;
+          font-size: 14px;
+          color: var(--muted-color);
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          .AlbumDetailPage-authorLink {
+            color: var(--link-color);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+
+            &:hover {
+              color: var(--primary-color);
+              text-decoration: underline;
+            }
+          }
+
+          .AlbumDetailPage-time {
+            margin-left: 8px;
+            padding-left: 12px;
+            border-left: 1px solid var(--control-bg);
+          }
+        }
+
+        .AlbumDetailPage-stats {
+          display: flex;
+          gap: 24px;
+          font-size: 15px;
+          color: var(--muted-color);
+
+          span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            
+            i {
+              color: var(--primary-color);
+              font-size: 16px;
+            }
+          }
+        }
+      }
+
+      .AlbumDetailPage-actions {
+        margin-top: 20px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+    }
+  }
+
+  .AlbumDetailPage-content {
+    h3 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: var(--heading-color);
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--control-bg);
+    }
+
+    .AlbumItemsList {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
+    .AlbumItem {
+      background: var(--body-bg);
+      border: 1px solid var(--control-bg);
+      border-radius: 8px;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: var(--primary-color);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        background: var(--control-bg);
+      }
+
+      .AlbumItem-main {
+        flex: 1;
+        min-width: 0;
+
+        .AlbumItem-title {
+          font-size: 16px;
+          font-weight: 500;
+          color: var(--link-color);
+          text-decoration: none;
+          display: block;
+          margin-bottom: 8px;
+          line-height: 1.5;
+
+          &:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+          }
+        }
+
+        .AlbumItem-meta {
+          font-size: 12px;
+          color: var(--muted-color);
+          text-align: right;
+          margin-top: 6px;
+        }
+      }
+
+      .AlbumItem-actions {
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+        align-self: center;
+
+        .Button {
+          font-size: 13px;
+          padding: 6px 12px;
+        }
+      }
+    }
+
+    .AlbumDetailPage-pagination {
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 2px solid var(--control-bg);
+
+      .Pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+
+        .Button {
+          min-width: 40px;
+          padding: 8px 16px;
+          border: 1px solid var(--control-bg);
+          border-radius: 6px;
+          background: var(--body-bg);
+          color: var(--body-color);
+          transition: all 0.2s;
+
+          &:hover {
+            background: var(--control-bg);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+          }
+
+          &.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #fff;
+            font-weight: 600;
+            pointer-events: none;
+          }
+        }
+
+        .Pagination-ellipsis {
+          padding: 8px 12px;
+          color: var(--muted-color);
+        }
+      }
+
+      .Pagination-info {
+        text-align: center;
+        font-size: 14px;
+        color: var(--muted-color);
+      }
+    }
+  }
+}
+
+// 模态框样式
+.CreateAlbumModal,
+.EditAlbumModal,
+.EditItemTitleModal,
+.AddToAlbumModal {
+  .Modal-content {
+    max-width: 500px;
+  }
+
+  .Form-group {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--heading-color);
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    textarea,
+    select.FormControl {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--control-bg);
+      border-radius: 6px;
+      font-size: 14px;
+      transition: all 0.2s;
+      background: var(--body-bg);
+      color: var(--body-color);
+
+      &:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+      }
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .helpText {
+      font-size: 12px;
+      color: var(--muted-color);
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    .Button {
+      margin-right: 10px;
+    }
+  }
+}
+
+// 空状态样式
+.Placeholder {
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--muted-color);
+  font-size: 16px;
+}
+
+// 响应式布局
+@media (max-width: 768px) {
+  .AlbumsPage {
+    .AlbumsPage-controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .AlbumsPage-nav {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .AlbumsPage-search {
+      max-width: none;
+      width: 100%;
+    }
+  }
+}

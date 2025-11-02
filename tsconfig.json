@@ -1,0 +1,27 @@
+{
+  "extends": "flarum-tsconfig",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["js/src/*"]
+    },
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "lib": ["ES2015", "DOM"],
+    "module": "ES2015",
+    "moduleResolution": "node",
+    "outDir": "./dist-typings",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "ES2015"
+  },
+  "include": [
+    "js/src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "js/dist"
+  ]
+}

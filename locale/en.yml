@@ -1,0 +1,95 @@
+wszdb-flarum-postalbums:
+  admin:
+    settings:
+      title: Post Albums Settings
+      display_name_label: Display Name
+      display_name_help: The name displayed on the forum frontend
+      guest_access_label: Allow Guest Access
+      guest_access_help: Allow unauthenticated users to browse albums
+      
+      album_title_length_label: Album Title Max Length
+      album_title_length_help: Maximum characters allowed for album titles
+      album_description_length_label: Album Description Max Length
+      album_description_length_help: Maximum characters allowed for album descriptions
+      item_title_length_label: Item Title Max Length
+      item_title_length_help: Maximum characters allowed for custom item titles
+      
+      max_albums_per_user_label: Max Albums Per User
+      max_albums_per_user_help: Limit the number of albums each user can create
+      max_items_per_album_label: Max Items Per Album
+      max_items_per_album_help: Limit the number of items in each album
+      
+      albums_per_page_label: Albums Per Page
+      albums_per_page_help: Number of albums to display per page
+      items_per_page_label: Items Per Page
+      items_per_page_help: Number of items to display per page in album details
+      
+      default_sort_label: Default Sort Order
+      default_sort_help: Default sorting method when users first visit the albums page
+
+  forum:
+    albums:
+      title: Post Albums
+      create: Create Album
+      edit: Edit Album
+      delete: Delete Album
+      
+      square: Albums Square
+      my_albums: My Albums
+      my_following: My Following
+      
+      search_placeholder: Search albums...
+      sort_latest: Latest
+      sort_popular: Most Popular
+      
+      no_albums: No albums yet
+      load_more: Load More
+      
+      title_label: Album Title
+      title_placeholder: Enter album title
+      description_label: Album Description
+      description_placeholder: Enter album description (optional)
+      
+      items_count: "{count, plural, one {# item} other {# items}}"
+      followers_count: "{count, plural, one {# follower} other {# followers}}"
+      
+      add_to_album: Add to Album
+      select_album: Select Album
+      no_albums_prompt: You haven't created any albums yet. Create one now?
+      
+      follow: Follow
+      followed: Following
+      unfollow: Unfollow
+      
+      edit_item_title: Edit Item Title
+      custom_title_label: Custom Title
+      custom_title_placeholder: Leave blank to use default title
+      
+      remove_item: Remove
+      confirm_delete_album: Are you sure you want to delete this album? This cannot be undone.
+      confirm_remove_item: Are you sure you want to remove this item?
+      
+      created_by: Created by
+      created_at: Created at
+      from_discussion: From
+      
+      success:
+        created: Album created successfully
+        updated: Album updated successfully
+        deleted: Album deleted
+        item_added: Added to album
+        item_removed: Removed from album
+        item_updated: Item updated successfully
+        album_followed: Album followed
+        album_unfollowed: Album unfollowed
+        
+      error:
+        title_required: Please enter album title
+        title_too_long: Album title is too long
+        description_too_long: Album description is too long
+        max_albums_reached: You have reached the maximum number of albums
+        max_items_reached: Album has reached the maximum number of items
+        item_exists: This post is already in the album
+        not_found: Album not found
+        no_permission: You don't have permission to do this
+        guest_access_denied: Login required to access albums

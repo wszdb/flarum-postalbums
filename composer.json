@@ -1,0 +1,43 @@
+{
+  "name": "wszdb/flarum-postalbums",
+  "description": "A Flarum extension for users to create post albums and collections",
+  "type": "flarum-extension",
+  "keywords": [
+    "flarum",
+    "extension",
+    "albums",
+    "collections",
+    "bookmarks"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "wszdb",
+      "email": "zzdogtxt@gmail.com",
+      "homepage": "https://github.com/wszdb/flarum-postalbums"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/wszdb/flarum-postalbums/issues",
+    "source": "https://github.com/wszdb/flarum-postalbums"
+  },
+  "require": {
+    "flarum/core": "^1.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Wszdb\\PostAlbums\\": "src/"
+    }
+  },
+  "extra": {
+    "flarum-extension": {
+      "title": "Post Albums",
+      "category": "feature",
+      "icon": {
+        "name": "fas fa-book",
+        "backgroundColor": "#e74c3c",
+        "color": "#fff"
+      }
+    }
+  }
+}

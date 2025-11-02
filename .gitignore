@@ -1,0 +1,44 @@
+# Dependencies
+/node_modules
+/vendor
+
+# Build outputs (保留 dist，需要提交)
+# /js/dist
+/dist-typings
+*.map
+
+# IDE
+/.idea
+/.vscode
+*.sublime-*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env.local
+
+# Composer
+composer.lock
+composer.phar
+
+# Package manager
+package-lock.json
+yarn.lock
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Release checklist (可选)
+RELEASE_CHECKLIST.md
