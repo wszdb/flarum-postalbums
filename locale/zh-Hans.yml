@@ -6,6 +6,10 @@ wszdb-flarum-postalbums:
       display_name_help: 在论坛前台显示的功能名称
       guest_access_label: 允许游客访问
       guest_access_help: 开启后，未登录用户可以浏览专辑
+      add_to_album_text_label: 加入专辑按钮文字
+      add_to_album_text_help: 帖子下方"加入专辑"按钮显示的文字
+      show_recommendations_label: 显示推荐专辑
+      show_recommendations_help: 在帖子页面底部显示推荐专辑
       
       album_title_length_label: 专辑标题最大长度
       album_title_length_help: 专辑标题允许的最大字符数

@@ -48,6 +48,9 @@ export default class AlbumsPage extends Page {
               )}
             </div>
 
+            {/* 公告/帮助信息 */}
+            {this.renderNotice()}
+
             <div className="AlbumsPage-controls">
               <ul className="AlbumsPage-nav">
                 <li>
@@ -125,129 +128,110 @@ export default class AlbumsPage extends Page {
     );
   }
 
-  renderAlbums() {
-    return (
-      <div className="AlbumsList">
-        {this.albums.map((album) => this.renderAlbumCard(album))}
-      </div>
-    );
-  }
-
-  renderAlbumCard(album) {
-    const albumAttrs = album.attributes || {};
+  renderNotice() {
+    const noticeText = app.forum.attribute('postalbums.notice_text');
     
-    // 从 included 数据中获取用户信息
-    const userRef = album.relationships?.user?.data;
-    let userName = '未知用户';
-    
-    if (userRef && userRef.id) {
-      const user = this.includedUsers[userRef.id];
-      if (user && user.attributes) {
-        userName = user.attributes.displayName || user.attributes.username || '未知用户';
-      }
-    }
-
-    return (
-      <div className="AlbumCard" key={album.id}>
-        <Link href={app.route('albums.show', { id: album.id })} className="AlbumCard-content">
-          <h3 className="AlbumCard-title">{albumAttrs.title || '未命名专辑'}</h3>
-          {albumAttrs.description && (
-            <p className="AlbumCard-description">{albumAttrs.description}</p>
-          )}
-          <div className="AlbumCard-meta">
-            <div className="AlbumCard-author">
-              <i className="fas fa-user"></i>
-              {userName}
-            </div>
-            <div className="AlbumCard-time">
-              {albumAttrs.createdAt}
-            </div>
-          </div>
-          <div className="AlbumCard-stats">
-            <span>
-              <i className="fas fa-bookmark"></i>
-              {albumAttrs.itemsCount || 0} 个收藏
-            </span>
-            <span>
-              <i className="fas fa-heart"></i>
-              {albumAttrs.followersCount || 0} 人关注
-            </span>
-          </div>
-        </Link>
-      </div>
-    );
-  }
-
-  renderPagination() {
-    if (this.totalPages <= 1) {
+    if (!noticeText) {
       return null;
     }
 
-    const pages = [];
-
-    if (this.currentPage > 1) {
-      pages.push(
-        <Link
-          href={app.route('albums', { tab: this.currentTab, page: this.currentPage - 1 })}
-          className="Button"
-        >
-          上一页
-        </Link>
-      );
-    }
-
-    for (let i = 1; i <= this.totalPages; i++) {
-      if (
-        i === 1 || 
-        i === this.totalPages || 
-        (i >= this.currentPage - 2 && i <= this.currentPage + 2)
-      ) {
-        pages.push(
-          <Link
-            href={app.route('albums', { tab: this.currentTab, page: i })}
-            className={`Button ${i === this.currentPage ? 'active' : ''}`}
-          >
-            {i}
-          </Link>
-        );
-      } else if (
-        i === this.currentPage - 3 || 
-        i === this.currentPage + 3
-      ) {
-        pages.push(<span className="Pagination-ellipsis">...</span>);
-      }
-    }
-
-    if (this.currentPage < this.totalPages) {
-      pages.push(
-        <Link
-          href={app.route('albums', { tab: this.currentTab, page: this.currentPage + 1 })}
-          className="Button"
-        >
-          下一页
-        </Link>
-      );
-    }
-
     return (
-      <div className="AlbumsPage-pagination">
-        <div className="Pagination">
-          {pages}
+      <div className="AlbumsPage-notice">
+        <div className="AlbumsPage-noticeContent">
+          {m.trust(this.sanitizeNotice(noticeText))}
         </div>
       </div>
     );
   }
 
-  switchTab(tab) {
-    this.currentTab = tab;
-    this.currentPage = 1;
-    m.route.set(app.route('albums', { tab }));
-    this.loadAlbums();
+  sanitizeNotice(text) {
+    // 只允许超链接和换行
+    // 将 \n 转换为 <br>
+    let html = text.replace(/\n/g, '<br>');
+    
+    // 只保留 <a> 和 <br> 标签，移除其他 HTML
+    // 这是一个简单的实现，生产环境建议使用专业的 sanitize 库
+    html = html.replace(/<(?!\/?(a|br)\b)[^>]+>/gi, '');
+    
+    return html;
   }
 
-  search() {
-    this.currentPage = 1;
-    this.loadAlbums();
+  renderAlbums() {
+    return (
+      <div className="AlbumsList">
+        {this.albums.map((album) => {
+          const userId = album.relationships?.user?.data?.id;
+          const user = userId ? this.includedUsers[userId] : null;
+          const userName = user?.attributes?.displayName || user?.attributes?.username || '未知用户';
+
+          return (
+            <div className="AlbumCard" key={album.id}>
+              <div className="AlbumCard-header">
+                <Link href={app.route('albums.show', { id: album.id })}>
+                  <h3>{album.attributes?.title || '未命名专辑'}</h3>
+                </Link>
+              </div>
+
+              {album.attributes?.description && (
+                <div className="AlbumCard-description">{album.attributes.description}</div>
+              )}
+
+              <div className="AlbumCard-meta">
+                <div className="AlbumCard-author">
+                  <span>{userName}</span>
+                </div>
+
+                <div className="AlbumCard-stats">
+                  <span>
+                    <i className="fas fa-bookmark"></i> {album.attributes?.itemsCount || 0} 个收藏
+                  </span>
+                  <span>
+                    <i className="fas fa-heart"></i> {album.attributes?.followersCount || 0} 人关注
+                  </span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  renderPagination() {
+    if (this.totalPages <= 1) return null;
+
+    const pages = [];
+    for (let i = 1; i <= this.totalPages; i++) {
+      pages.push(
+        <Button
+          key={i}
+          className={`Button ${i === this.currentPage ? 'Button--primary' : ''}`}
+          onclick={() => this.goToPage(i)}
+        >
+          {i}
+        </Button>
+      );
+    }
+
+    return (
+      <div className="AlbumsPage-pagination">
+        <Button
+          className="Button"
+          disabled={this.currentPage === 1}
+          onclick={() => this.goToPage(this.currentPage - 1)}
+        >
+          上一页
+        </Button>
+        {pages}
+        <Button
+          className="Button"
+          disabled={this.currentPage === this.totalPages}
+          onclick={() => this.goToPage(this.currentPage + 1)}
+        >
+          下一页
+        </Button>
+      </div>
+    );
   }
 
   loadAlbums() {
@@ -300,10 +284,27 @@ export default class AlbumsPage extends Page {
     });
   }
 
+  switchTab(tab) {
+    this.currentTab = tab;
+    this.currentPage = 1;
+    m.route.set(app.route('albums'), { tab });
+    this.loadAlbums();
+  }
+
+  goToPage(page) {
+    this.currentPage = page;
+    m.route.set(app.route('albums'), { tab: this.currentTab, page });
+    this.loadAlbums();
+  }
+
+  search() {
+    this.currentPage = 1;
+    this.loadAlbums();
+  }
+
   createAlbum() {
     app.modal.show(CreateAlbumModal, {
       onsubmit: () => {
-        this.loading = true;
         this.loadAlbums();
       }
     });
